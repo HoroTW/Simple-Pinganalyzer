@@ -36,8 +36,6 @@ def parse_ping_file(data_file, COUNT_AS_LOSS_IF_OVER=-1):
     nanCounter = len(data[data.isna().any(axis=1)])
     noAnsswerCounter = len(re.findall(r".*no answer yet for icmp_seq=.*", file_string))
 
-    print(f"Number of NaN lines: {nanCounter}")
-    print(f"Number of lines with no answer: {noAnsswerCounter}")
     assert (
         nanCounter == noAnsswerCounter
     ), "Number of NaN lines and number of lines with no answer are not equal"
@@ -89,8 +87,6 @@ def parse_hping_file(data_file):
     data["time"] = data["time"].astype(float)
 
     # set all values where time is higher than 4 times std_dev to NaN
-    print(data["time"].std())
-    print(f"type: {type(data['time'].std())}")
     std_dev = data["time"].std()
     mean = data["time"].mean()
     data["time"] = data["time"].apply(
